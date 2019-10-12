@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Canvas</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       canvas {
         background: #eee;
@@ -12,21 +12,29 @@
   </head>
 
   <body>
-    <canvas class="canvas" width="600" height="400">이 브라우저는 캔버스를 지원하지 않습니다.</canvas>
+    <canvas class="canvas" width="600" height="400"
+      >이 브라우저는 캔버스를 지원하지 않습니다.</canvas
+    >
 
     <script>
+      const canvas = document.querySelector(".canvas");
+      const ctx = canvas.getContext("2d");
+
+      const toRadian = deg => {
+        return (deg * Math.PI) / 180;
+      };
+
       // beginPath
+      ctx.beginPath();
       // arc
+      ctx.arc(200, 200, 100, 0, toRadian(60), false);
+      ctx.stroke();
       // closePath
+      ctx.beginPath(); // beginPath를 새로 작성하면 이전의 것은 closePath는 자동으로 닫힘다.
+      ctx.arc(400, 50, 50, 0, toRadian(360), false);
+      ctx.stroke();
+
+      // Math.PI * 2 : radian(각도)
     </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
