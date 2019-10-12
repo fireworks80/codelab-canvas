@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas 이미지 random 위치에 캐릭터 보여주기</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      canvas {
+        background: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Image</h1>
+    <canvas class="canvas" width="600" height="400"
+      >이 브라우저는 캔버스를 지원하지 않습니다.</canvas
+    >
+    <script>
+      const canvas = document.querySelector(".canvas");
+      const ctx = canvas.getContext("2d");
+
+      class Ilbuni {
+        constructor() {
+          const imgEl = new Image();
+          const n = Math.floor(Math.random() * 4) + 1;
+
+          imgEl.src = `../images/ilbuni${n}.png`;
+          imgEl.addEventListener("load", () => {
+            ctx.drawImage(
+              imgEl,
+              Math.random() * (canvas.width * 0.9),
+              Math.random() * (canvas.height * 0.9),
+              60,
+              80
+            );
+          });
+        }
+      }
+
+      new Ilbuni();
+    </script>
+  </body>
+</html>

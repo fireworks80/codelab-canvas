@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas 이미지 random 위치에 캐릭터 보여주기</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        background: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Image</h1>
+    <canvas class="canvas" width="600" height="400"
+      >이 브라우저는 캔버스를 지원하지 않습니다.</canvas
+    >
+    <script>
+      const canvas = document.querySelector('.canvas');
+      const ctx = canvas.getContext('2d');
+
+      class Ilbuni {
+        constructor() {
+          const n = Math.floor(Math.random() * 4) + 1;
+          
+          this.imgEl = new Image();
+          this.imgEl.src = `../images/ilbuni${n}.png`;
+        }
+        draw(posX, posY) {
+          ctx.drawImage(this.imgEl, posX, posY, 60, 80);
+        }
+      }
+
+      const ilbun = new Ilbuni();
+      let isMove = false;
+      canvas.addEventListener('mousedown', e => {
+        // console.log(e.clientX);
+        // new Ilbuni(e.clientX, e.clientY);
+        isMove = true;
+      });
+
+      canvas.addEventListener('mouseup', () => {
+        isMove = false;
+      });
+
+      canvas.addEventListener('mousemove', e => {        
+        if (isMove) {
+          ilbun.draw(e.clientX, e.clientY);
+        }
+      });
+    </script>
+  </body>
+</html>
