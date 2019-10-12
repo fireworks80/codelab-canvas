@@ -15,9 +15,21 @@
     <canvas class="canvas" width="600" height="400">이 브라우저는 캔버스를 지원하지 않습니다.</canvas>
 
     <script>
+      const canvas = document.querySelector('.canvas');
+      const ctx = canvas.getContext('2d');
+
       // fillRect
-      // clearRect
+      ctx.fillRect(0, 0, 100, 200);
+      // ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      
+      ctx.fillStyle = 'dodgerBlue';
+      ctx.fillRect(200, 200, 100, 200);
+
+      // clearRect (지우기)
+      ctx.clearRect(50, 50, 20, 20);
+
       // strokeRect
+      ctx.strokeRect(200, 50, 100, 100);
     </script>
   </body>
 </html>
