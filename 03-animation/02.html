@@ -18,7 +18,7 @@
     <script>
       const canvas = document.querySelector(".canvas");
       const ctx = canvas.getContext("2d");
-
+      let timer = null;
       const toRadian = deg => (deg * Math.PI) / 180;
 
       let xPos = 0;
@@ -31,7 +31,11 @@
         ctx.fill();
       }
 
-      setInterval(loop, 1000);
+      timer = setInterval(loop, 100);
+
+      document.body.addEventListener("click", () => {
+        clearInterval(timer);
+      });
     </script>
   </body>
 </html>
