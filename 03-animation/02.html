@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Canvas</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       .canvas {
         background: #eee;
@@ -14,14 +14,24 @@
   <body>
     <h1>setInterval</h1>
     <canvas class="canvas" width="500" height="300"></canvas>
+
+    <script>
+      const canvas = document.querySelector(".canvas");
+      const ctx = canvas.getContext("2d");
+
+      const toRadian = deg => (deg * Math.PI) / 180;
+
+      let xPos = 0;
+      function loop() {
+        // 지우기
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.beginPath();
+        ctx.arc((xPos += 10), 100, 20, 0, toRadian(360), false);
+        ctx.fill();
+      }
+
+      setInterval(loop, 1000);
+    </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
