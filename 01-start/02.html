@@ -9,13 +9,28 @@
         margin: 0;
       }
       .canvas {
+        /* 시각적인 크기 */
+        width: 500px;
+        height: 500px;
         background: #eee;
       }
     </style>
   </head>
 
   <body>
+
+    <!-- 
+      고해상도 이미지 작업을 하려면
+      canvas에서 크게 만들고 css로 1/2를 줄여서 사용
+      (반응형에서의 고해상도 이미지 작업과 같음)
+      그냥 이미지로 하는 것보다 canvas가 애니메이션이 더 부드럽다
+
+      css의 크기만 변겨할때는 변경할 내용이 없지만
+      cavas의 width, height를 변경하게 되면 안에 들어가는 요소의 수치도 변경 해 줘야 된다.
+    -->
+
     <h1>캔버스 사이즈 설정</h1>
+    <!-- canvas 에서 사용하는 픽셀 -->
     <canvas class="canvas" width="500" height="300"></canvas>
     <canvas class="canvas canvas2" width="1000" height="600"></canvas>
   </body>

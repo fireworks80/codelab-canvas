@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Canvas</title>
+    <title>Canvas 지원 여부 설정</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="./modernizr.js"></script>
@@ -12,9 +12,16 @@
 
     <script>
       // Canvas 지원 여부 확인
+      // 모더나이저에서 canvas, webGL을 선택해서 커스터 마이징 해서 받아서 사용함
       if (Modernizr.canvas) {
         console.log('Canvas를 지원하는 브라우저');
       }
+
+      // 모더나이저 미사용시
+      // const canvas = document.querySelector('canvas');
+      // if (canvas.getContext) {
+      //   console.log('Canvas를 지원하는 브라우저');
+      // }
     </script>
   </body>
 </html>
