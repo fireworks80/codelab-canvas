@@ -1,0 +1,14 @@
+{
+  "name": "codelab-canvas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/fireworks80/codelab-canvas.git",
+  "author": "한승철 <fireworks80@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lite-server": "^2.5.4"
+  },
+  "scripts": {
+    "server": "lite-server"
+  }
+}
