@@ -33,6 +33,22 @@
     <!-- canvas 에서 사용하는 픽셀 -->
     <canvas class="canvas" width="500" height="300"></canvas>
     <canvas class="canvas canvas2" width="1000" height="600"></canvas>
+
+    <script>
+      const canvas1 = document.querySelector('.canvas');
+      const canvas2 = document.querySelector('.canvas2');
+      const ctx1 = canvas1.getContext('2d');
+      const ctx2 = canvas2.getContext('2d');
+
+      ctx1.beginPath();
+      ctx1.arc(50, 50, 50, 0, Math.PI * 2, false);
+      ctx1.fill();
+
+      ctx2.beginPath();
+      ctx2.arc(50, 50, 50, 0, Math.PI * 2, false);
+      ctx2.fill();
+
+    </script>
   </body>
 </html>
 
