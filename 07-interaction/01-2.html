@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Interaction</h1>
+    <canvas class="canvas" width="600" height="400"
+      >이 브라우저는 캔버스를 지원하지 않습니다.</canvas
+    >
+
+    <script>
+      const canvas = document.querySelector('.canvas');
+      const ctx = canvas.getContext('2d');
+
+      const info = {
+        x: window.innerWidth * 0.2,
+        y: window.innerHeight * 0.15,
+        width: 100,
+        height: 100
+      };
+
+      // requestAnimationframe는 애니메이션 할때만 넣는게 이나고
+      // 반복적인 작업을 할 곳에 넣어서 반복적업을 하는 준비 상태를 만들어 놓는다.
+      // painting을 할때 유실이 없도록 하기 위해(필수는 아님)
+
+      function setLayout() {
+        // requestAnimationFrame(() => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        info.x = window.innerWidth * 0.2;
+        info.y = window.innerHeight * 0.15;
+
+        draw();
+        // });
+      }
+
+      function draw() {
+        ctx.fillRect(info.x, info.y, info.width, info.height);
+      }
+
+      canvas.addEventListener('click', e => {
+        // console.log(e.clientX, e.clientY);
+        // console.log(e.layerX, e.layerY);
+        const x = e.layerX;
+        const y = e.layerY;
+
+        if (
+          x > info.x &&
+          x < info.width + info.x &&
+          (y > info.y && y < info.y + info.height)
+        ) {
+          console.log('ok');
+        }
+      });
+
+      window.addEventListener('resize', setLayout);
+
+      setLayout();
+    </script>
+  </body>
+</html>

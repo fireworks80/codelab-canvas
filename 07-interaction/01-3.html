@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Interaction</h1>
+    <canvas class="canvas" width="600" height="400"
+      >이 브라우저는 캔버스를 지원하지 않습니다.</canvas
+    >
+
+    <script>
+      const canvas = document.querySelector('.canvas');
+      const ctx = canvas.getContext('2d');
+
+      const info = {
+        x: 200,
+        y: 150,
+        width: 100,
+        height: 100
+      };
+
+      function draw() {
+        ctx.fillRect(info.x, info.y, info.width, info.height);
+      }
+
+      draw();
+
+      canvas.addEventListener('click', e => {
+        // console.log(e.clientX, e.clientY);
+        // console.log(e.layerX, e.layerY);
+        const x = e.layerX * (canvas.width / window.innerWidth);
+        const y = e.layerY * (canvas.height / window.innerHeight);
+
+        if (
+          x > info.x &&
+          x < info.width + info.x &&
+          (y > info.y && y < info.y + info.height)
+        ) {
+          console.log('ok');
+        }
+      });
+    </script>
+  </body>
+</html>
