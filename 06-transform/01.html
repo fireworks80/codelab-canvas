@@ -19,18 +19,20 @@
       const canvas = document.querySelector('.canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
+      let angle = 0;
+      let time = null;
 
       function toRadian(d) {
         return (d * Math.PI) / 180;
       }
 
-      img.src = '../images/ilbuni1.png';
-
-      img.addEventListener('load', () => {
+      function draw() {
+        time = requestAnimationFrame(draw);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.setTransform(1, 0, 0, 1, 0, 0); // trasnform을 초기화 한다 (초기화 하지 않으면 변형시 이상해 질 수 있다)
         // ctx.scale(1.5, 1.5);
         ctx.translate(250, 150);
-        ctx.rotate(toRadian(45)); // 기준은 캔버스 화면의 (0, 0)을 기준으로 한다.
+        ctx.rotate(toRadian(angle)); // 기준은 캔버스 화면의 (0, 0)을 기준으로 한다.
         ctx.translate(-250, -150);
         ctx.drawImage(img, 190, 75, 120, 150);
 
@@ -38,7 +40,19 @@
         ctx.arc(250, 150, 7, 0, Math.PI * 2, false);
         ctx.fillStyle = 'tomato';
         ctx.fill();
-      });
+
+        if (angle >= 360) {
+          angle = 0;
+          cancelAnimationFrame(time);
+          draw();
+        }
+
+        angle += 1;
+      }
+
+      img.src = '../images/ilbuni1.png';
+
+      img.addEventListener('load', draw);
     </script>
   </body>
 </html>
