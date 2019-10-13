@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .canvas {
+        background: #eee;
+      }
+
+      .v-canvas {
+        background: tomato;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas width="500" height="400" class="canvas"></canvas>
+    <script>
+      const canvas = document.querySelector('.canvas');
+      const ctx = canvas.getContext('2d');
+
+      const canvasEl = document.createElement('canvas');
+      const sCtx = canvasEl.getContext('2d');
+
+      canvasEl.className = 'v-canvas';
+      canvasEl.width = '50';
+      canvasEl.height = '50';
+      let posX = 0;
+      let step = 1;
+      const tick = 4;
+      let time = 0;
+
+      function moveX() {
+        requestAnimationFrame(moveX);
+
+        if (time % tick === 0) {
+          if (posX > canvasEl.width - 10) {
+            step *= -1;
+          } else if (posX < 0) {
+            step *= -1;
+          }
+
+          posX += step;
+          sCtx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+          sCtx.fillRect(posX, 0, 10, 10);
+        }
+
+        time += 1;
+      }
+
+      document.body.appendChild(canvasEl);
+      moveX();
+
+      let posY = 10;
+      let stepB = 1;
+      function drawBig() {
+        requestAnimationFrame(drawBig);
+
+        if (posY > canvas.height) {
+          stepB *= -1;
+        } else if (posY < 0) {
+          stepB *= -1;
+        }
+
+        posY += stepB;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(canvasEl, 10, posY, 50, 50);
+      }
+
+      drawBig();
+    </script>
+  </body>
+</html>
