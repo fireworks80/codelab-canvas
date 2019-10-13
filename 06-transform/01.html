@@ -19,8 +19,9 @@
       const canvas = document.querySelector('.canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      let angle = 0;
+      let angle = 0.1;
       let time = null;
+      const targetAngle = 1080;
 
       function toRadian(d) {
         return (d * Math.PI) / 180;
@@ -41,13 +42,31 @@
         ctx.fillStyle = 'tomato';
         ctx.fill();
 
-        if (angle >= 360) {
-          angle = 0;
+        // if (angle >= 360) {
+        //   angle = 0.1;
+        //   cancelAnimationFrame(time);
+        //   draw();
+        // }
+
+        // 가속
+        // angle = angle + angle * 0.05;
+
+        // 감속
+        // 1 ~ 100의 거리를 이동할때 보복이 10이라면
+        // 처음은 100 - 10
+        // 다음은 90 - 10 ... 이 된다.
+        // 이런식으로 보폭은 일정하지만 내가 도착해야 할 거리는 줄기 때문에 잠점 감속한다.
+
+        if (angle >= targetAngle - 10) {
+          console.log('end');
+          angle = targetAngle;
           cancelAnimationFrame(time);
-          draw();
+          // return;
         }
 
-        angle += 1;
+        angle = angle + (targetAngle - angle) * 0.01;
+
+        // console.log(angle);
       }
 
       img.src = '../images/ilbuni1.png';
