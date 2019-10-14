@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>frame by frame</title>
+    <style>
+      canvas {
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas width="600" height="880"></canvas>
+
+    <script>
+      let imgX = 0;
+      let n = 0;
+      const canvas = document.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      img.src = '../images/sprite-ilbuni-hi.png';
+
+      const draw = () => {
+        requestAnimationFrame(draw);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (imgX > 5900) {
+          imgX = 0;
+        }
+        imgX += 600;
+
+        ctx.drawImage(img, imgX, 0, 600, 880, 0, 0, 600, 880);
+
+        // console.log(imgX);
+      };
+
+      img.addEventListener('load', draw);
+    </script>
+  </body>
+</html>

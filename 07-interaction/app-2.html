@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+
+    <script src="./Box.js"></script>
+    <script src="./Panel.js"></script>
+    <script>
+      const boxArray = []; // Box 인스턴스들을 넣을 배열
+      let selectedBox;
+      let phase; // 1: 기본상태, 2: 패널 등장, 3: 패널 보기
+      let oX;
+      let oY;
+      let panelScale;
+      let panel;
+      let panelAng;
+      const canvas = document.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+
+      function toRadian(d) {
+        return (d * Math.PI) / 180;
+        // deg 는
+        // d * 180 / Math.PI;
+      }
+
+      function setLayout() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        oX = window.innerWidth / 2;
+        oY = window.innerHeight / 2;
+        // console.log('setLayout');
+      }
+
+      function init() {
+        let x, y, speed, box;
+        setLayout();
+
+        for (let i = 0; i < 10; i += 1) {
+          x = Math.random() * (window.innerWidth * 0.9);
+          y = Math.random() * (window.innerHeight * 0.9);
+          speed = Math.random() * 2 + 1;
+          // console.log(x, y);
+
+          box = new Box({
+            index: i,
+            x,
+            y,
+            speed,
+            width: 100,
+            height: 100
+          });
+
+          boxArray.push(box);
+        }
+
+        panel = new Panel();
+        phase = 1;
+        panelScale = 0.1;
+        panelAng = 0.1;
+        render();
+      }
+
+      function render() {
+        let box;
+
+        requestAnimationFrame(render);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < boxArray.length; i += 1) {
+          box = boxArray[i];
+          box.draw();
+        }
+
+        switch (phase) {
+          case 1:
+            panelScale = 0.1;
+            selectedBox = null;
+            for (let i = 0; i < boxArray.length; i += 1) {
+              box = boxArray[i];
+              box.y -= box.speed;
+
+              if (box.y < -box.height) {
+                box.y = canvas.height;
+              }
+            }
+            break;
+          case 2:
+            if (panelScale >= 0.999) {
+              panelScale = 1;
+              phase = 3;
+            }
+
+            panelScale = panelScale + (1 - panelScale) * 0.05;
+            panelAngle = panelScale * 720;
+
+            panel.draw();
+
+            break;
+          case 3:
+            panel.draw();
+            panel.displayContent(selectedBox.index);
+            break;
+        }
+      }
+
+      function checkArea({ layerX, layerY }, { width, x, height, y }) {
+        return (
+          layerX > x &&
+          layerX < width + x &&
+          (layerY > y && layerY < height + y)
+        );
+      }
+
+      function boxClickHandler(e) {
+        // console.log(e.layerX, e.layerY);
+        // pageX (문서의 길이까지 더한 위치값)
+
+        for (let i = 0; i < boxArray.length; i += 1) {
+          if (checkArea(e, boxArray[i])) {
+            // 분기의 맞는 값들이 들어오는데 마지막에 있는 아이만 남는다.
+            selectedBox = boxArray[i];
+          }
+        }
+
+        if (phase === 1 && selectedBox) {
+          phase = 2;
+        } else if (phase === 3) {
+          phase = 1;
+        }
+      }
+
+      init();
+      // console.log(boxArray);
+      window.addEventListener('resize', setLayout);
+      canvas.addEventListener('click', boxClickHandler);
+    </script>
+  </body>
+</html>
