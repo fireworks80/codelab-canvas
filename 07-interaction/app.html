@@ -21,6 +21,7 @@
     <script>
       const boxArray = []; // Box 인스턴스들을 넣을 배열
       let selectedBox;
+      let phase; // 1: 기본상태, 2: 패널 등장, 3: 패널 보기
       const canvas = document.querySelector('canvas');
       const ctx = canvas.getContext('2d');
 
@@ -37,7 +38,7 @@
         for (let i = 0; i < 10; i += 1) {
           x = Math.random() * (window.innerWidth * 0.9);
           y = Math.random() * (window.innerHeight * 0.9);
-          speed = Math.random() * 4 + 1;
+          speed = Math.random() * 2 + 1;
           // console.log(x, y);
 
           box = new Box({
@@ -52,6 +53,7 @@
           boxArray.push(box);
         }
 
+        phase = 1;
         render();
       }
 
@@ -72,22 +74,26 @@
         }
       }
 
+      function checkArea({ layerX, layerY }, { width, x, height, y }) {
+        return (
+          layerX > x &&
+          layerX < width + x &&
+          (layerY > y && layerY < height + y)
+        );
+      }
+
       function boxClickHandler(e) {
         // console.log(e.layerX, e.layerY);
         // pageX (문서의 길이까지 더한 위치값)
 
         for (let i = 0; i < boxArray.length; i += 1) {
-          if (
-            e.layerX > boxArray[i].x &&
-            e.layerX < boxArray[i].width + boxArray[i].x &&
-            (e.layerY > boxArray[i].y &&
-              e.layerY < boxArray[i].height + boxArray[i].y)
-          ) {
+          if (checkArea(e, boxArray[i])) {
             // 분기의 맞는 값들이 들어오는데 마지막에 있는 아이만 남는다.
             selectedBox = boxArray[i];
           }
         }
-        console.log(selectedBox.index);
+
+        selectedBox && console.log(selectedBox.index);
       }
 
       init();
